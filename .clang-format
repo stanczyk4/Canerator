@@ -64,7 +64,7 @@ AllowShortCaseLabelsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: InlineOnly # https://clang.llvm.org/docs/ClangFormatStyleOptions.html#allowshortfunctionsonasingleline
 AllowShortLoopsOnASingleLine: false # https://clang.llvm.org/docs/ClangFormatStyleOptions.html#allowshortloopsonasingleline
-ColumnLimit: 0 # Line width limit, how many characters wide before formatting by length, https://clang.llvm.org/docs/ClangFormatStyleOptions.html#columnlimit
+ColumnLimit: 120 # Line width limit, how many characters wide before formatting by length, https://clang.llvm.org/docs/ClangFormatStyleOptions.html#columnlimit
 DerivePointerAlignment: false # https://clang.llvm.org/docs/ClangFormatStyleOptions.html#derivepointeralignment
 PointerAlignment: Left # https://clang.llvm.org/docs/ClangFormatStyleOptions.html#pointeralignment
 SortIncludes: true # https://clang.llvm.org/docs/ClangFormatStyleOptions.html#sortincludes
