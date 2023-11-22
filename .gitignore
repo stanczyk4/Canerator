@@ -36,3 +36,5 @@ build
 .vscode/**/*
 !.vscode/**/extensions.json
 !.vscode/**/launch.json
+
+!third_party/luacpp/lua/lua54.lib

@@ -1,13 +1,11 @@
 #include "ImFrame.h"
-
+#include "app.hpp"
 
 #ifdef IMFRAME_WINDOWS
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
-
-#include "app.hpp"
 
 namespace app
 {
@@ -48,5 +46,11 @@ namespace app
     };
 }  // namespace app
 
+// Note, dont use IMFRAME_WINDOWS as it uses the WINAPI wWinMain entry and that redirect the terminal
+
 // ImFrame main function and app creation
-IMFRAME_MAIN("Canerator", "Canerator", app::MainApp)
+int main(int, char**)
+{
+    return ImFrame::Run("Canerator", "Canerator",
+                        [](const auto& params) { return std::make_unique<app::MainApp>(params); });
+}
