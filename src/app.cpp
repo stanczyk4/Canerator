@@ -35,6 +35,10 @@ namespace app
         // ImGui::ShowDemoWindow();
         // ImPlot::ShowDemoWindow();
 
+        ImGui::Begin("Debug");
+        ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
+        ImGui::End();
+
         ImGui::Begin("Canerator");
 
         if (ImGui::BeginMainMenuBar())
