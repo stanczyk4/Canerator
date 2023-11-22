@@ -16,6 +16,7 @@ set(MESSAGE_QUIET ON)
 CPMAddPackage("gh:JamesBoer/ImFrame#5e9fb2ceb6d2bf170e7937ec908b90350cf52569")
 unset(MESSAGE_QUIET)
 
+# https://github.com/jordanvrtanoski/luacpp
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/luacpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC src)
