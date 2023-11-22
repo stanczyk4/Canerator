@@ -19,11 +19,18 @@ unset(MESSAGE_QUIET)
 # https://github.com/jordanvrtanoski/luacpp
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/luacpp)
 
+find_package(Python REQUIRED Development)
+
 target_include_directories(${PROJECT_NAME} PUBLIC src)
-target_link_libraries(${PROJECT_NAME} PRIVATE ImFrame luacpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    ImFrame
+    luacpp
+    Python::Python
+)
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
 endif()

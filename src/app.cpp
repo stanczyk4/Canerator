@@ -1,16 +1,28 @@
 #include "app.hpp"
 
+#include <cstdio>
 #include <iostream>
 
 #include "ImFrame.h"
 #include "imgui.h"
 #include "implot.h"
 
+
+#ifdef _DEBUG
+#undef _DEBUG
+#include <Python.h>
+#define _DEBUG
+#else
+#include <Python.h>
+#endif
+
 namespace app
 {
 
     Canerator::Canerator()
     {
+        Py_Initialize();
+
         std::cout << "Hi from C++, this is a demo how LuaCpp can be used"
                   << "\n";
 
@@ -28,6 +40,7 @@ namespace app
 
     Canerator::~Canerator()
     {
+        Py_Finalize();
     }
 
     void Canerator::Update()
@@ -57,6 +70,16 @@ namespace app
         if (ImGui::Button("Execute Lua Script"))
         {
             lua_.Run("main");
+        }
+
+        if (ImGui::Button("Execute Python Script"))
+        {
+            PyObject* obj = Py_BuildValue("s", "scripts/main.py");
+            FILE* file    = _Py_fopen_obj(obj, "r+");
+            if (file != NULL)
+            {
+                PyRun_SimpleFile(file, "scripts/main.py");
+            }
         }
 
         if (ImGui::Button("File Explorer"))
