@@ -13,23 +13,26 @@ add_executable(${PROJECT_NAME}
 
 include(cmake/CPM.cmake)
 set(MESSAGE_QUIET ON)
+
 CPMAddPackage("gh:JamesBoer/ImFrame#5e9fb2ceb6d2bf170e7937ec908b90350cf52569")
+
+set(LV_CONF_PATH ${CMAKE_CURRENT_LIST_DIR}/src/lv_conf.h CACHE STRING "" FORCE)
+CPMAddPackage("gh:lvgl/lvgl#v8.3.10")
+
 unset(MESSAGE_QUIET)
 
 # https://github.com/jordanvrtanoski/luacpp
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/luacpp)
 
-find_package(Python REQUIRED Development)
-
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ImFrame
     luacpp
-    Python::Python
+    lvgl::lvgl
 )
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+    # target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
     target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
