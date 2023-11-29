@@ -33,8 +33,12 @@ namespace app
                                 [[maybe_unused]] int action,
                                 [[maybe_unused]] int mods) override
         {
+            app.UpdateMouseButton(button, action, mods);
         }
-        void OnCursorPosition([[maybe_unused]] double x, [[maybe_unused]] double y) override {}
+        void OnCursorPosition([[maybe_unused]] double x, [[maybe_unused]] double y) override
+        {
+            app.UpdateMousePosition(x, y);
+        }
 
         // Window messages
         void OnWindowPositionChange([[maybe_unused]] int x, [[maybe_unused]] int y) override {}

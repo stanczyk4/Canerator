@@ -8,10 +8,21 @@
 #include "implot.h"
 #include "lv_conf.h"
 #include "lvgl.h"
+#include "lvgl_demo/lv_demo_widgets.h"
+
+
+struct Mouse
+{
+    bool is_pressed = false;
+    int16_t x       = 0;
+    int16_t y       = 0;
+};
+
+static Mouse s_mouse;
 
 static constexpr unsigned int DISP_HOR_RES = 256;
 static constexpr unsigned int DISP_VER_RES = 256;
-static constexpr int DISP_BUF_SIZE         = DISP_HOR_RES * DISP_VER_RES / 4;
+static constexpr int DISP_BUF_SIZE         = DISP_HOR_RES * DISP_VER_RES / 10;
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[DISP_BUF_SIZE]; /*Declare a buffer for 1/10 screen size*/
 
@@ -88,15 +99,16 @@ extern "C"
         (void)indev;
         (void)data;
         /*`touchpad_is_pressed` and `touchpad_get_xy` needs to be implemented by you*/
-        // if (touchpad_is_pressed())
-        // {
-        //     data->state = LV_INDEV_STATE_PRESSED;
-        //     touchpad_get_xy(&data->point.x, &data->point.y);
-        // }
-        // else
-        // {
-        //     data->state = LV_INDEV_STATE_RELEASED;
-        // }
+        if (s_mouse.is_pressed)
+        {
+            data->state   = LV_INDEV_STATE_PRESSED;
+            data->point.x = s_mouse.x;
+            data->point.y = s_mouse.y;
+        }
+        else
+        {
+            data->state = LV_INDEV_STATE_RELEASED;
+        }
     }
 };
 
@@ -130,9 +142,11 @@ namespace app
         lv_indev_drv_register(&indev_drv);         /*Finally register the driver*/
 
 
-        lv_example_get_started_1();
+        // lv_example_get_started_1();
         std::cout << "Hi from C++, this is a demo how LuaCpp can be used"
                   << "\n";
+
+        lv_demo_widgets();
 
         // The simples way is to use CompileStringAndRun method
         try
@@ -190,7 +204,7 @@ namespace app
 
         ImGui::End();
 
-        ImGui::Begin("LVGL");
+        ImGui::Begin("LVGL", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
         auto image_ret = ImFrame::LoadTexture(display_buffer);
         auto image     = image_ret.value();
 
@@ -198,4 +212,18 @@ namespace app
 
         ImGui::End();
     }
+
+    void Canerator::UpdateMouseButton(int button, int action, int mods)
+    {
+        s_mouse.is_pressed = action;
+        printf("%d, %d, %d\n", button, action, mods);
+    }
+
+    void Canerator::UpdateMousePosition(double x, double y)
+    {
+        s_mouse.x = std::round(x) - 16;
+        s_mouse.y = std::round(y) - 16;
+        printf("%f, %f\n", x, y);
+    }
+
 }  // namespace app

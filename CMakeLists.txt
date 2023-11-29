@@ -9,6 +9,11 @@ project(Canerator)
 add_executable(${PROJECT_NAME}
     src/main.cpp
     src/app.cpp
+
+    src/lvgl_demo/assets/img_clothes.c
+    src/lvgl_demo/assets/img_demo_widgets_avatar.c
+    src/lvgl_demo/assets/img_lvgl_logo.c
+    src/lvgl_demo/lv_demo_widgets.c
 )
 
 include(cmake/CPM.cmake)

@@ -16,6 +16,9 @@ namespace app
 
         void Update();
 
+        void UpdateMouseButton(int button, int action, int mods);
+        void UpdateMousePosition(double x, double y);
+
       private:
         LuaContext lua_;
     };
